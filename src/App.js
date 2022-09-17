@@ -1,56 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { useSelector, useDispatch } from "react-redux"
+import { increament, decreament, setValue } from "./features/CounterSlice"
 
 function App() {
+  const { count, getTodos } = useSelector(state => {
+    console.log('selector', { state })
+    return state
+  })
+  const dispatch = useDispatch();
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
+        <h1>value {count}</h1>
+        <div style={{ display: "flex" }}>
+          {/* <input type="number" onChange={(e) => {
+            setV(e.target.value)
+          }} /> */}
+
+          <button onClick={() => {
+            dispatch(increament())
+          }}>+</button>
+          {/* <button onClick={() => {
+
+            dispatch(setValue(init))
+          }}>set</button> */}
+          <button onClick={() => {
+            dispatch(decreament())
+          }}>-</button>
+        </div>
       </header>
+      <ul>
+        {
+          getTodos.todos.map((item) => {
+            return <li>{item.title}</li>
+          })
+        }
+      </ul>
     </div>
   );
 }
